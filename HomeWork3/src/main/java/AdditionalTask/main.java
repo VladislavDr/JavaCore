@@ -27,18 +27,16 @@ public class main {
         lstStudent.forEach(e -> rndRangSteudent(e));
 //        lstStudent.forEach(System.out::println);
 
-
         System.out.println(
                 lstStudent.stream()
                         .filter(e -> e.getSpecialization()
-                        .toLowerCase().equals("Informatics".toLowerCase()))
-                        .limit(5)
+                                .equalsIgnoreCase("Informatics"))
                         .map(e -> e.getFCs() + " " +(e.getAllRang()
                                 .stream().map(o -> o.doubleValue())
-                                .collect(toList()))
-                                .stream()
                                 .mapToDouble(Double::doubleValue)
-                                .average().orElse(0))
+                                .average()
+                                .orElse(0)))
+                        .limit(5)
                         .toList()
         );
 
