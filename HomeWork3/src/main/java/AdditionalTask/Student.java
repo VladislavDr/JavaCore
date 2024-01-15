@@ -3,7 +3,7 @@ package AdditionalTask;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student implements Assessment{
+public class Student implements Assessment, Comparable<Student>{
     private final String FCs;
     private final String specialization;
 
@@ -31,11 +31,10 @@ public class Student implements Assessment{
         ratings.add(rang);
     }
 
-    @Override
-    public List<Integer> getAllRang() {
-        return getRatings();
-    }
 
+    public double getAvarageRang(){
+        return getRatings().stream().mapToDouble(e -> e.doubleValue()).average().orElse(0);
+    }
     @Override
     public String toString() {
         return "Student{" +
@@ -43,5 +42,16 @@ public class Student implements Assessment{
                 ", specialization: '" + specialization + '\'' +
                 ", ratings: " + ratings +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        if (this.getAvarageRang() == o.getAvarageRang()){
+            return 0;
+        } else if (this.getAvarageRang() > o.getAvarageRang()){
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }

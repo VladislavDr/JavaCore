@@ -24,26 +24,35 @@ public class main {
 
         Collections.addAll(lstStudent, ivanov, fedorod, obrychkova, okinke, kyznecov, popov, sokolova, novikov, orlov);
 
-        lstStudent.forEach(e -> rndRangSteudent(e));
-//        lstStudent.forEach(System.out::println);
+        lstStudent.forEach(e -> rndRangStudent(e));
 
-        System.out.println(
-                lstStudent.stream()
-                        .filter(e -> e.getSpecialization()
-                                .equalsIgnoreCase("Informatics"))
-                        .map(e -> e.getFCs() + " " +(e.getAllRang()
-                                .stream().map(o -> o.doubleValue())
-                                .mapToDouble(Double::doubleValue)
-                                .average()
-                                .orElse(0)))
-                        .limit(5)
-                        .toList()
-        );
+//        System.out.println(
+//                lstStudent.stream()
+//                        .filter(e -> e.getSpecialization()
+//                                .equalsIgnoreCase("Informatics"))
+//                        .map(e -> e.getFCs() + " " +(e.getRatings()
+//                                .stream().map(o -> o.doubleValue())
+//                                .mapToDouble(Double::doubleValue)
+//                                .average()
+//                                .orElse(0)))
+//                        .limit(5)
+//                        .toList()
+//        );
 
-
+        List<Student> doneList= lstStudent.stream()
+                .filter(e -> e.getSpecialization()
+                        .equalsIgnoreCase("Informatics") && e.getAvarageRang() >= 4.5)
+                .limit(5)
+                .sorted()
+                .toList();
+        if(doneList.isEmpty()){
+            System.out.println("Учеников с баллом выше 4,5 по специальности Информатика нет");
+        } else {
+            doneList.forEach(System.out::println);
+        }
     }
 
-    public static void rndRangSteudent(Student student){
+    public static void rndRangStudent(Student student){
         for (int i = 0; i < Random.rnd()+5; i++){
             student.assessment(Random.rnd());
         }
